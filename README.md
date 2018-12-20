@@ -42,3 +42,14 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## TODO
+
+- Use sass in create-react-app
+yarn add node-sass
+
+- Different project structure for scaling a large app
+: src/assets
+: src/components (for common components to be used by other container)
+: src/containers (for different containers)
+- TBC

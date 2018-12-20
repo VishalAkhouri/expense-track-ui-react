@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import {Header} from '../components/header/header';
+import {Navigator} from "../components/navigator/navigator";
+import {CreateExpenses} from "./create/create-expenses";
 
 class App extends Component {
   headerTitle = "Expenses";
@@ -10,6 +12,8 @@ class App extends Component {
         <div>
           <Header name={this.headerTitle}/>
           <div>This is the content</div>
+            <Navigator/>
+            <CreateExpenses/>
         </div>
     );
   }
