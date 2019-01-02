@@ -43,7 +43,10 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-## TODO
+#GIT commands
+- git remote show origin
+
+## DONE
 
 - Use sass in create-react-app
 yarn add node-sass
@@ -53,3 +56,9 @@ yarn add node-sass
 : src/components (for common components to be used by other container)
 : src/containers (for different containers)
 - TBC
+
+- Added  form and save form in local state
+
+## TODO
+
+- save to back end
