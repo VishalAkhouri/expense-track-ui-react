@@ -3,6 +3,7 @@ import './App.scss';
 import {Header} from '../components/header/header';
 import {Navigator} from "../components/navigator/navigator";
 import {CreateExpenses} from "./create/create-expenses";
+import AppRouter from "../components/router/router";
 
 class App extends Component {
   headerTitle = "Expenses";
@@ -11,9 +12,10 @@ class App extends Component {
     return (
         <div>
           <Header name={this.headerTitle}/>
-          <div>This is the content</div>
-            <Navigator/>
-            <CreateExpenses/>
+
+          <AppRouter/>
+            {/*<Navigator/>*/}
+            {/*<CreateExpenses/>*/}
         </div>
     );
   }

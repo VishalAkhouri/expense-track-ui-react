@@ -1,6 +1,9 @@
 import React from 'react';
 import './create-expenses.scss';
 
+// import firebase from '../../firebase';
+import axios from '../../axios';
+
 export class CreateExpenses extends React.Component {
 
     constructor(props) {
@@ -10,12 +13,14 @@ export class CreateExpenses extends React.Component {
             expense: '',
             expenseBy: '',
             expenseDated: '',
-            category: ''
-        }
+            category: '',
+            month: '',
+            year: ''
+        };
     }
 
     saveData = () => {
-        console.log('data saved called', this.state);
+        axios.post('/expenses.json', this.state);
     };
 
     handleCancel(evt) {
@@ -44,7 +49,7 @@ export class CreateExpenses extends React.Component {
                     </label>
 
                     <label htmlFor='expenseBy'>
-                        <span>expense made by (in AUD)</span>
+                        <span>expense made by (vishal/swati)</span>
                         <input type='text' id='expenseBy' name='expenseBy' value={this.state.expenseBy} onChange={this.handleChange}></input>
                     </label>
 
