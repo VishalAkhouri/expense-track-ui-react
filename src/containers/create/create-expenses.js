@@ -2,7 +2,9 @@ import React from 'react';
 import './create-expenses.scss';
 
 // import firebase from '../../firebase';
-import axios from '../../axios';
+// import axios from '../../axios';
+import axios from '../../axios-mongod';
+
 
 export class CreateExpenses extends React.Component {
 
@@ -20,7 +22,9 @@ export class CreateExpenses extends React.Component {
     }
 
     saveData = () => {
-        axios.post('/expenses.json', this.state);
+        // TODO uncomment for firebase connect
+        // axios.post('/expenses.json', this.state);
+        axios.post('/expense/add', this.state);
     };
 
     handleCancel(evt) {

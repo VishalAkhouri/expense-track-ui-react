@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from '../../axios';
+// import axios from '../../axios';
+import axios from '../../axios-mongod';
+
 
 export class ListExpenses extends React.Component {
     state = {
@@ -11,7 +13,9 @@ export class ListExpenses extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`/expenses.json`)
+        // TODO uncomment for firebase connect
+        // axios.get(`/expenses.json`)
+        axios.get(`/expense`)
             .then(result => {
                 let keys = Object.keys(result.data);
                 let expenses = [];
