@@ -57,14 +57,59 @@ export class ListExpenses extends React.Component {
     }
 
     getDynamicExpensesAmount() {
-        const dynamicExpense = this.state.expenses.filter((expense) => expense.category !== 'static')
-            .reduce((total, currentValue) => total + currentValue, 0);
-
-        console.log('total dynamic expenses: ', this.state.expenses, dynamicExpense);
+        return this.state.expenses.filter((expense) => expense.category !== 'static')
+            .reduce(function (total, currentValue) {
+                return total + currentValue.amount;
+            } , 0);
     }
 
     getStaticExpensesAmount() {
+        return this.state.expenses.filter((expense) => expense.category === 'static')
+            .reduce(function (total, currentValue) {
+                return total + currentValue.amount;
+            } , 0);
+    }
 
+    getTotalExpenses() {
+        return this.getDynamicExpensesAmount() + this.getStaticExpensesAmount();
+    }
+
+    getExpensesByCategories() {
+        let categoryExpense = [];
+        const categories = [...new Set(this.state.expenses.map(expense => expense.category))];
+
+        categories.forEach((category) => {
+            const total = this.state.expenses.filter((expense) => expense.category === category)
+                .reduce(function (total, currentValue) {
+                    return total + currentValue.amount;
+                } , 0);
+
+            categoryExpense.push({
+                category,
+                total
+            });
+        });
+
+        return categoryExpense;
+    }
+
+    getExpensesByIndividuals() {
+        let individualExpenses = [];
+        const individuals = [...new Set(this.state.expenses.map(expense => expense.expenseBy))]; // use Set to remove duplicates
+
+        individuals.forEach((individual) => {
+            const total = this.state.expenses.filter((expense) => expense.expenseBy === individual)
+                .reduce(function (total, currentValue) {
+                    return total + currentValue.amount;
+                } , 0);
+
+            individualExpenses.push({
+                individual,
+                total
+            });
+        });
+
+        return individualExpenses;
     }
 
     render() {
@@ -119,9 +164,42 @@ export class ListExpenses extends React.Component {
                         </div>
                     </form>
                 </section>
+
                 <div>
                     <span>total static expenses: </span>
+                    <span>{this.getStaticExpensesAmount()}</span>
+                </div>
+
+                <div>
+                    <span>total dynamic expenses: </span>
                     <span>{this.getDynamicExpensesAmount()}</span>
+                </div>
+
+                <div>
+                    <span>total expenses: </span>
+                    <span>{this.getTotalExpenses()}</span>
+                </div>
+
+                <div>
+                    <span>Aggregate by category: </span>
+                    <ul>
+                        {
+                            this.getExpensesByCategories().map((expenseCategory, i) => {
+                                return <li key={i}>{expenseCategory.category} | {expenseCategory.total}</li>
+                            })
+                        }
+                    </ul>
+                </div>
+
+                <div>
+                    <span>Aggregate who made the expense: </span>
+                    <ul>
+                        {
+                            this.getExpensesByIndividuals().map((individualExpenses, i) => {
+                                return <li key={i}>{individualExpenses.individual} | {individualExpenses.total}</li>
+                            })
+                        }
+                    </ul>
                 </div>
             </div>
         );
