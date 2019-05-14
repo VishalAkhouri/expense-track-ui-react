@@ -4,6 +4,7 @@ import {Header} from '../components/header/header';
 import {Navigator} from "../components/navigator/navigator";
 import {CreateExpenses} from "./create/create-expenses";
 import AppRouter from "../components/router/router";
+import NavBar from '../components/navbar/nav-bar';
 
 class App extends Component {
   headerTitle = "Expenses";
@@ -11,6 +12,7 @@ class App extends Component {
   render() {
     return (
         <div>
+            <NavBar />
           <Header name={this.headerTitle}/>
 
           <AppRouter/>

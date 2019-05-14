@@ -1,7 +1,12 @@
 import React from 'react';
-// import axios from '../../axios';
 import axios from '../../axios-mongod';
 import {DateService} from "../../common/services/DateService";
+// import {Button} from "../../common/components/styled/Button";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import {ExpenseRow} from '../../components/expenseRow/expense-row';
+import SimpleResultCard from '../../components/simpleResultCard/simple-result-card';
+import AggregateResultCard from '../../components/aggregateResultCard/aggregate-result-card';
 
 export class ListExpenses extends React.Component {
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -85,8 +90,8 @@ export class ListExpenses extends React.Component {
                 } , 0);
 
             categoryExpense.push({
-                category,
-                total
+                key: category,
+                value: total
             });
         });
 
@@ -104,8 +109,8 @@ export class ListExpenses extends React.Component {
                 } , 0);
 
             individualExpenses.push({
-                individual,
-                total
+                key: individual,
+                value: total
             });
         });
 
@@ -115,24 +120,9 @@ export class ListExpenses extends React.Component {
     render() {
         return (
             <div>
-                <ul>
-                    { this.state.expenses.map((expense, i) => {
-                        return (
-                            <div>
-                                <li key={i}>{expense.transactionDate} |&nbsp;
-                                <span>{expense.storeName}</span> |&nbsp;
-                                <span> {expense.description}</span> |&nbsp;
-                                <span> AUD {expense.amount}</span> |&nbsp;
-                                <span> {expense.category}</span> |&nbsp;
-                                <span> {expense.expenseBy}</span>
-                                </li>
-                            </div>
-                        )
-                    })}
-                </ul>
-
-                <br />
-
+                <header>
+                    <h1>Expenses summary</h1>
+                </header>
                 <section>
                     <form>
                         <div>Get expenses for the month and year:</div>
@@ -160,47 +150,25 @@ export class ListExpenses extends React.Component {
                         </label>
 
                         <div>
-                            <input type='button' value='Fetch' onClick={this.fetchAggregatedData}/>
+                            <Button variant="contained" color="primary" onClick={this.fetchAggregatedData}>
+                                Fetch data
+                            </Button>
                         </div>
                     </form>
                 </section>
 
-                <div>
-                    <span>total static expenses: </span>
-                    <span>{this.getStaticExpensesAmount()}</span>
-                </div>
-
-                <div>
-                    <span>total dynamic expenses: </span>
-                    <span>{this.getDynamicExpensesAmount()}</span>
-                </div>
-
-                <div>
-                    <span>total expenses: </span>
-                    <span>{this.getTotalExpenses()}</span>
-                </div>
-
-                <div>
-                    <span>Aggregate by category: </span>
+                <Grid>
                     <ul>
-                        {
-                            this.getExpensesByCategories().map((expenseCategory, i) => {
-                                return <li key={i}>{expenseCategory.category} | {expenseCategory.total}</li>
-                            })
-                        }
+                        <ExpenseRow expenses={this.state.expenses} />
                     </ul>
-                </div>
+                </Grid>
 
-                <div>
-                    <span>Aggregate who made the expense: </span>
-                    <ul>
-                        {
-                            this.getExpensesByIndividuals().map((individualExpenses, i) => {
-                                return <li key={i}>{individualExpenses.individual} | {individualExpenses.total}</li>
-                            })
-                        }
-                    </ul>
-                </div>
+                <SimpleResultCard title='Total expenses' content={this.getTotalExpenses()}></SimpleResultCard>
+                <AggregateResultCard title='Aggregate who made the expense:' contents={this.getExpensesByIndividuals()}></AggregateResultCard>
+                <SimpleResultCard title='Total static expenses' content={this.getStaticExpensesAmount()}></SimpleResultCard>
+                <SimpleResultCard title='Total dynamic expenses' content={this.getDynamicExpensesAmount()}></SimpleResultCard>
+                <AggregateResultCard title='Aggregate by category:' contents={this.getExpensesByCategories()}></AggregateResultCard>
+
             </div>
         );
     }
