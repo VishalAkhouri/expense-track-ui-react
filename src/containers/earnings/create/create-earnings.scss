@@ -1,0 +1,28 @@
+section {
+    > form {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        > label {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+
+            > span {
+                min-width: 300px;
+            }
+        }
+
+        > div {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+
+            > input {
+                margin-right: 50px;
+            }
+        }
+    }
+
+}

@@ -1,17 +1,20 @@
 import React from 'react';
-import './create-expenses.scss';
+import './create-earnings.scss';
 
-// import firebase from '../../firebase';
-// import axios from '../../axios';
-import axios from '../../axios-mongod';
-import {DateService} from "../../common/services/DateService";
-import {Button} from '../../common/components/styled/Button';
+import {DateService} from "../../../common/services/DateService";
+import axios from "../../../axios-mongod";
+import {Button} from "../../../common/components/styled/Button";
 
-export class CreateExpenses extends React.Component {
+export class CreateEarnings extends React.Component {
+    earningCategories = ['salary'];
+    accountCredited = ['ANZ', 'NAB'];
+    earningBy = ['VISHAL', 'SWATI'];
 
-    expenseCategories = ['eatingOut', 'groceries', 'clothes', 'travel', 'mobile', 'entertainment', 'petrol', 'miscellaneous', 'gifts', 'utilities', 'cash', 'homeLoanExtraContrib', 'cheapFareMart', 'medical', 'homeImprovement', 'healthWellness', 'prisha', 'parking', 'static'];
-    accountDebited = ['ANZ', 'NAB', 'GEMVisa', '28Degrees'];
-    expenseBy = ['VISHAL', 'SWATI'];
+    constructor(props) {
+        super(props);
+
+        this.state = this.getInitialState();
+    }
 
     getInitialState() {
 
@@ -20,12 +23,12 @@ export class CreateExpenses extends React.Component {
         const  thisYear = DateService.getCurrentYear(); // moment().format('YYYY');
 
         return {
-            storeName: '',
+            earningsSource: '',
             description: '',
             amount: '',
-            category: this.expenseCategories[0],
-            accountDebited: this.accountDebited[0],
-            expenseBy: this.expenseBy[0],
+            category: this.earningCategories[0],
+            accountCredited: this.accountCredited[0],
+            earningBy: this.earningBy[0],
             transactionDate: todayDate,
             month: thisMonth,
             year: thisYear,
@@ -34,16 +37,10 @@ export class CreateExpenses extends React.Component {
         };
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = this.getInitialState();
-    }
-
     saveData = () => {
         // TODO uncomment for firebase connect
         // axios.post('/expenses.json', this.state);
-        axios.post('/expense/add', this.state);
+        axios.post('/earnings/add', this.state);
     };
 
     handleCancel = (event) => {
@@ -61,7 +58,7 @@ export class CreateExpenses extends React.Component {
         return (
             <div>
                 <header>
-                    <h1>Enter expenses details:</h1>
+                    <h1>Enter earnings details:</h1>
                 </header>
 
                 <section>
@@ -71,9 +68,9 @@ export class CreateExpenses extends React.Component {
                             <input type='text' id='transactionDate' name='transactionDate' value={this.state.transactionDate} onChange={this.handleChange}></input>
                         </label>
 
-                        <label htmlFor='storeName'>
-                            <span>Store name</span>
-                            <input type='text' id='storeName' name='storeName' value={this.state.storeName} onChange={this.handleChange}></input>
+                        <label htmlFor='earningsSource'>
+                            <span>Earnings source</span>
+                            <input type='text' id='earningsSource' name='earningsSource' value={this.state.earningsSource} onChange={this.handleChange}></input>
                         </label>
 
                         <label htmlFor='description'>
@@ -90,29 +87,29 @@ export class CreateExpenses extends React.Component {
                             <span>Category</span>
                             <select id='category' name='category' value={this.state.category} onChange={this.handleChange}>
                                 {
-                                    this.expenseCategories.map( (category, i) => {
+                                    this.earningCategories.map( (category, i) => {
                                         return <option key={i} value={category}>{category}</option>
                                     })
                                 }
                             </select>
                         </label>
 
-                        <label htmlFor='accountDebited'>
-                            <span>Account debited</span>
-                            <select id='accountDebited' name='accountDebited' value={this.state.accountDebited} onChange={this.handleChange}>
+                        <label htmlFor='accountCredited'>
+                            <span>Account credited</span>
+                            <select id='accountCredited' name='accountCredited' value={this.state.accountCredited} onChange={this.handleChange}>
                                 {
-                                    this.accountDebited.map((accountName, i) => {
+                                    this.accountCredited.map((accountName, i) => {
                                         return <option key={i} value={accountName}>{accountName}</option>
                                     })
                                 }
                             </select>
                         </label>
 
-                        <label htmlFor='expenseBy'>
-                            <span>Expense by</span>
-                            <select id='expenseBy' name='expenseBy' value={this.state.expenseBy} onChange={this.handleChange}>
+                        <label htmlFor='earningBy'>
+                            <span>Earnings by</span>
+                            <select id='earningBy' name='earningBy' value={this.state.earningBy} onChange={this.handleChange}>
                                 {
-                                    this.expenseBy.map((person, i) => {
+                                    this.earningBy.map((person, i) => {
                                         return <option key={i} value={person}>{person}</option>
                                     })
                                 }
@@ -143,9 +140,8 @@ export class CreateExpenses extends React.Component {
                             <Button value='Cancel' onClick={this.handleCancel}>Cancel</Button>
                             <Button value='Save' onClick={this.saveData}>Save Data</Button>
                         </div>
-
-
                     </form>
+
                 </section>
             </div>
         );
